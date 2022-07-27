@@ -80,23 +80,24 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# DATABASES = { 
-#     'default': { 
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2', 
-#         'NAME': 'dc7jepmpfkpkk9',
-#         'USER': 'syhujansaburhd',
-#         'PASSWORD' : '3ea5bef8e7b541744b1e7d29f8911affa6b5aa755175a67bf15f3f121f06640b',
-#         'HOST' : 'ec2-3-224-164-189.compute-1.amazonaws.com',
-#         'PORT' : '5432',
-#     } 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
 # }
+
+
+DATABASES = { 
+    'default': { 
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+        'NAME': 'dffuks13v9n352',
+        'USER': 'tomhukkzddtsfb',
+        'PASSWORD' : 'a583e8ba26602ddf300c4f520ce683702b25a37ac5b3121352d72d4024c39d5d',
+        'HOST' : 'ec2-54-165-184-219.compute-1.amazonaws.com',
+        'PORT' : '5432',
+    } 
+}
 
 
 # Password validation
@@ -160,3 +161,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rushi.creates@gmail.com'       # our sender email
 EMAIL_HOST_PASSWORD = 'ptmhuoezwxxsozlc'       # our sender email's pass
+
+
+
+
+
+
