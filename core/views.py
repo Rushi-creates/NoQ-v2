@@ -343,7 +343,7 @@ def login_AdminAcc(request):
 def addQueue(request):
 
     my_adminAcc_fk = request.data.get('adminAcc_fk')
-    totalQueues = Queue.objects.filter(admin_fk=my_adminAcc_fk).count()
+    totalQueues = Queue.objects.filter(adminAcc_fk=my_adminAcc_fk).count()
 
     if totalQueues > 5:
          # each admin must be able to create only 5 queues
