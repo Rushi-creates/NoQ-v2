@@ -20,6 +20,8 @@ urlpatterns = [
     
 
     #! AdminAcc paths
+    path('adminAcc/get_regex_AdminAcc/', views.get_regex_AdminAcc),
+    
     path('adminAcc/', views.getAll_AdminAcc),
     path('adminAcc/<int:id>/', views.getSingle_AdminAcc),
     path('adminAcc/register/', views.register_AdminAcc),  #add

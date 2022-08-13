@@ -7,6 +7,7 @@ from core.myPaginations import MyCustomPagination
 from core.serializers import  UserAccSerializer,AdminAccSerializer,QueueSerializer,QueueUserSerializer
 from .filters import UserAccFilters,AdminAccFilters,QueueUserFilters , QueueFilters
 
+
 import random
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -201,6 +202,40 @@ def getAll_AdminAcc(request):
         return Response(serializer.data)
     except:
         return Response([])
+
+
+
+
+#! let user search adminsAcc by emails  in search field 
+@api_view(['GET'])
+def get_regex_AdminAcc(request):
+
+    paginator = MyCustomPagination()
+    filteredData = AdminAcc.objects.filter(email__icontains=request.GET['email'])
+    try :
+        context = paginator.paginate_queryset(filteredData, request)
+        serializer = AdminAccSerializer(context,many=True)
+        return Response(serializer.data)
+    except:
+        return Response([])
+
+
+
+# #! let user search adminsAcc by emails  in search field 
+# @api_view(['POST'])
+# def get_regex_AdminAcc(request):
+
+#     mySearch =request.data.get('searchData')
+
+#     paginator = MyCustomPagination()
+#     filteredData = AdminAcc.objects.filter(email__icontains=mySearch)
+#     print(filteredData)
+#     try :
+#         context = paginator.paginate_queryset(filteredData, request)
+#         serializer = AdminAccSerializer(context,many=True)
+#         return Response(serializer.data)
+#     except:
+#         return Response([])
 
 
 
