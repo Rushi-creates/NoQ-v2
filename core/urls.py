@@ -7,6 +7,12 @@ urlpatterns = [
     path('sa/checkSuperAdmin/', views.checkSuperAdmin),
 
 
+
+    path('notifyUpcomingUserByEmail/', views.notifyUpcomingUserByEmail),
+
+    
+
+
     #! UserAcc paths
     path('userAcc/', views.getAll_UserAcc),
     path('userAcc/<int:id>/', views.getSingle_UserAcc),

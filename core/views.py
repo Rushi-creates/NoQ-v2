@@ -132,8 +132,7 @@ def verify_UserEmail_beforeRegister(request):
 @api_view(['POST'])
 def forgotPasword_userAcc(request):
 
-    emailBody = 'Your OTP to reset password is '+ str(otp) +'.\n'
-    'if you think this was sent to you by mistake , please ignore this email'
+    
 
     myemail =request.data.get('email')
 
@@ -142,6 +141,9 @@ def forgotPasword_userAcc(request):
     if UserAcc.objects.filter(email=myemail).exists() :
         otp=random.randint(1000,9999) 
         print (otp)
+
+        emailBody = 'Your OTP to reset password is '+ str(otp) +'.\n'
+        'if you think this was sent to you by mistake , please ignore this email'
 
         # note first send this same otp to some sms paid service with twillio  or to EMAIL
         # twillio  OR email code here
@@ -490,7 +492,20 @@ def updateQueueUser(request,id):
 @api_view(['DELETE' , 'GET'])
 def deleteQueueUser(request,id):
     userObj = QueueUser.objects.get(id=id)  #! make sure to chaneg id , to g_uid here
+    getEmail = userObj.userAcc_name
     userObj.delete()
+
+    #Todo : uncomment this later , when you are in production
+    #? this might send email to wrong emails ( since i'm using false emails)
+    # email = EmailMessage(
+    #     'You are removed from queue :',                   # subject test here 
+    #     'if you think this email was sent to you by mistake, please ignore this message',        # body text here 
+    #     settings.EMAIL_HOST_USER,    # sender's email from settigs.py 
+    #     [getEmail],    # whom to send email (userAcc_name contains email)
+    #     )
+    # email.fail_silently=False  # will sent us email notifying in case of any error
+    # email.send()    
+
     return Response(f"Deleted {id}")
 
 
@@ -501,4 +516,19 @@ def deleteQueueUserByUid(request,uid):
     userObj.delete()
     return Response(f"Deleted by uid {uid}")
 
+
+@api_view(['POST'])
+def notifyUpcomingUserByEmail(request):
+    my_userAcc_name = request.data.get('userAcc_name')
+
+    email = EmailMessage(
+        'Your number in queue is expected soon :',             # subject test here 
+        'if you think this email was sent to you by mistake, please ignore this message',    # body text here 
+        settings.EMAIL_HOST_USER,    # sender's email from settigs.py 
+        [my_userAcc_name],    # whom to send email (userAcc_name contains email)
+        )
+    email.fail_silently=False  # will sent us email notifying in case of any error
+    email.send()  
+
+    return Response(f"Email sent successfully")
 
