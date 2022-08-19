@@ -69,10 +69,9 @@ class QueueUser(models.Model):
     adminAcc_fk = models.ForeignKey(AdminAcc,blank=True, null=True,on_delete=models.CASCADE, related_name='adminAccFk_in_queueUser') 
     adminAcc_name = models.CharField(max_length=80,default='no value')
     
-    joinedTime = models.CharField(max_length=20)  
+    joinedTime = models.CharField(max_length=50)  
 
     class Meta:
         ordering = ['id']
-
 
 
