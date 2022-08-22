@@ -221,6 +221,20 @@ def get_regex_AdminAcc(request):
     except:
         return Response([])
 
+#! let user search adminsAcc by emails  in search field 
+@api_view(['GET'])
+def get_regex_byCompanyName_AdminAcc(request):
+
+    paginator = MyCustomPagination()
+    filteredData = AdminAcc.objects.filter(companyName__icontains=request.GET['companyName'])
+    try :
+        context = paginator.paginate_queryset(filteredData, request)
+        serializer = AdminAccSerializer(context,many=True)
+        return Response(serializer.data)
+    except:
+        return Response([])
+
+
 
 
 # #! let user search adminsAcc by emails  in search field 
