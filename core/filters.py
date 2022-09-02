@@ -15,7 +15,7 @@ class QueueFilters(django_filters.FilterSet):
     class Meta: 
         model = Queue
         # fields = '__all__'
-        fields = ['id','name','description','setMaxPeople','isOpen','adminAcc_fk']
+        fields = ['id','name','description','setMaxPeople','isOpen','adminAcc_fk','totalPeople']
 
 class QueueUserFilters(django_filters.FilterSet):
     class Meta: 

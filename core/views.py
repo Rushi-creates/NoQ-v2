@@ -1,4 +1,5 @@
 # from appNameFolder.fileName import func/className
+from functools import partial
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -410,8 +411,17 @@ def addQueue(request):
 
 @api_view(['GET'])
 def getQueue(request):
+    # get map of query params passed by user
+    # print('=============' + str(request.GET))
+    # print('=============' + str(request.GET['queue_fk'])) 
     paginator = MyCustomPagination()
     userObj = Queue.objects.all()
+
+    ## get toal people 
+    # totalPeople = QueueUser.objects.filter(queue_fk=request.GET['queue_fk']).count()
+    # userObj.total_people = 
+
+    # og from here
     filteredData = QueueFilters(request.GET, queryset = userObj).qs # gives filter search options from filters.py
     try :
         context = paginator.paginate_queryset(filteredData, request)
@@ -464,6 +474,7 @@ def addQueueUser(request):
     my_userAcc_fk = request.data.get('userAcc_fk')
     my_queue_fk = request.data.get('queue_fk')
     my_adminAcc_fk = request.data.get('adminAcc_fk')
+    
 
     # one queueUser per 'shop'
     if QueueUser.objects.filter(userAcc_fk=my_userAcc_fk,queue_fk=my_queue_fk,adminAcc_fk=my_adminAcc_fk).exists() :
@@ -472,8 +483,21 @@ def addQueueUser(request):
         userObj = QueueUserSerializer(data=request.data)
         if userObj.is_valid():
             userObj.save()
+
+            #! Start- update queue DB totalPeople prop , when new queueUser added to that queue
+            totalPeopleCount = QueueUser.objects.filter(queue_fk=my_queue_fk).count()
+            myQueueObj = Queue.objects.get(id=my_queue_fk) # get single obj
+            # partial= true , is patch update ( thus imp )
+            qSerializer = QueueSerializer(instance=myQueueObj, data= {'totalPeople' : totalPeopleCount}, partial = True)
+            
+            if qSerializer.is_valid():
+                qSerializer.save()
+                print(qSerializer.data)
+            #! end of queue DB modifictaion 
+
         return Response(userObj.data)
         
+
 
 
 @api_view(['GET'])
@@ -507,7 +531,23 @@ def updateQueueUser(request,id):
 def deleteQueueUser(request,id):
     userObj = QueueUser.objects.get(id=id)  #! make sure to chaneg id , to g_uid here
     getEmail = userObj.userAcc_name
+
+    getQueue_fk = userObj.queue_fk_id  #! _id at end is imp 
     userObj.delete()
+
+    # make sure to keep this after delete only
+    #! Start- update queue (not queueUser) DB totalPeople prop , when new queueUser added to that queue
+    totalPeopleCount = QueueUser.objects.filter(queue_fk=getQueue_fk).count()
+    myQueueObj = Queue.objects.get(id=getQueue_fk) # get single obj
+    # partial= true , is patch update ( thus imp )
+    qSerializer = QueueSerializer(instance=myQueueObj, data= {'totalPeople' : totalPeopleCount}, partial = True)
+    
+    if qSerializer.is_valid():
+        qSerializer.save()
+        print(qSerializer.data)
+    #! end of queue DB modifictaion
+
+     
 
     #Todo : uncomment this later , when you are in production
     #? this might send email to wrong emails ( since i'm using false emails)

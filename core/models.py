@@ -48,6 +48,7 @@ class Queue(models.Model):
     description = models.CharField(max_length=80)
     setMaxPeople =  models.IntegerField(default=1000)  # people cant join anymore, if this num exists
     isOpen = models.BooleanField(default=True)  # bool to open/close queues on holidays etc
+    totalPeople = models.IntegerField(default=0,blank=True, null=True)  # make it nullable in frontend
 
     class Meta:
         ordering = ['id']
