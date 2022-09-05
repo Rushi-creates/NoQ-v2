@@ -484,16 +484,16 @@ def addQueueUser(request):
         if userObj.is_valid():
             userObj.save()
 
-            #! Start- update queue DB totalPeople prop , when new queueUser added to that queue
-            totalPeopleCount = QueueUser.objects.filter(queue_fk=my_queue_fk).count()
-            myQueueObj = Queue.objects.get(id=my_queue_fk) # get single obj
-            # partial= true , is patch update ( thus imp )
-            qSerializer = QueueSerializer(instance=myQueueObj, data= {'totalPeople' : totalPeopleCount}, partial = True)
+            # #! Start- update queue DB totalPeople prop , when new queueUser added to that queue
+            # totalPeopleCount = QueueUser.objects.filter(queue_fk=my_queue_fk).count()
+            # myQueueObj = Queue.objects.get(id=my_queue_fk) # get single obj
+            # # partial= true , is patch update ( thus imp )
+            # qSerializer = QueueSerializer(instance=myQueueObj, data= {'totalPeople' : totalPeopleCount}, partial = True)
             
-            if qSerializer.is_valid():
-                qSerializer.save()
-                print(qSerializer.data)
-            #! end of queue DB modifictaion 
+            # if qSerializer.is_valid():
+            #     qSerializer.save()
+            #     print(qSerializer.data)
+            # #! end of queue DB modifictaion 
 
         return Response(userObj.data)
         
@@ -532,20 +532,20 @@ def deleteQueueUser(request,id):
     userObj = QueueUser.objects.get(id=id)  #! make sure to chaneg id , to g_uid here
     getEmail = userObj.userAcc_name
 
-    getQueue_fk = userObj.queue_fk_id  #! _id at end is imp 
+    # getQueue_fk = userObj.queue_fk_id  #! _id at end is imp 
     userObj.delete()
 
-    # make sure to keep this after delete only
-    #! Start- update queue (not queueUser) DB totalPeople prop , when new queueUser added to that queue
-    totalPeopleCount = QueueUser.objects.filter(queue_fk=getQueue_fk).count()
-    myQueueObj = Queue.objects.get(id=getQueue_fk) # get single obj
-    # partial= true , is patch update ( thus imp )
-    qSerializer = QueueSerializer(instance=myQueueObj, data= {'totalPeople' : totalPeopleCount}, partial = True)
+    # # make sure to keep this after delete only
+    # #! Start- update queue (not queueUser) DB totalPeople prop , when new queueUser added to that queue
+    # totalPeopleCount = QueueUser.objects.filter(queue_fk=getQueue_fk).count()
+    # myQueueObj = Queue.objects.get(id=getQueue_fk) # get single obj
+    # # partial= true , is patch update ( thus imp )
+    # qSerializer = QueueSerializer(instance=myQueueObj, data= {'totalPeople' : totalPeopleCount}, partial = True)
     
-    if qSerializer.is_valid():
-        qSerializer.save()
-        print(qSerializer.data)
-    #! end of queue DB modifictaion
+    # if qSerializer.is_valid():
+    #     qSerializer.save()
+    #     print(qSerializer.data)
+    # #! end of queue DB modifictaion
 
      
 
