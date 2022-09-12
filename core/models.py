@@ -60,19 +60,18 @@ class Queue(models.Model):
 class QueueUser(models.Model):
     # this user joined which queue number
     queue_fk = models.ForeignKey(Queue,blank=True, null=True, on_delete=models.CASCADE, related_name='queueFk_in_queueUser') 
-    queue_name = models.CharField(max_length=80,default='no value')
+    # queue_name = models.CharField(max_length=80,default='no value')
 
     # which user joined this queue
     userAcc_fk = models.ForeignKey(UserAcc,blank=True, null=True,on_delete=models.CASCADE, related_name='userAccFk_in_queueUser') 
-    userAcc_name = models.CharField(max_length=80,default='no value')
+    # userAcc_name = models.CharField(max_length=80,default='no value')
 
     # user joined queue of which admin (shop)
     adminAcc_fk = models.ForeignKey(AdminAcc,blank=True, null=True,on_delete=models.CASCADE, related_name='adminAccFk_in_queueUser') 
-    adminAcc_name = models.CharField(max_length=80,default='no value')
+    # adminAcc_name = models.CharField(max_length=80,default='no value')
     
     joinedTime = models.CharField(max_length=50)  
 
     class Meta:
         ordering = ['id']
-
 

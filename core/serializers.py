@@ -23,6 +23,9 @@ class QueueSerializer(serializers.ModelSerializer):
 
 
 class QueueUserSerializer(serializers.ModelSerializer):
+    queue_name = serializers.SerializerMethodField('get_queueName')
+    userAcc_name = serializers.SerializerMethodField('get_userAccName')
+    adminAcc_name = serializers.SerializerMethodField('get_adminAcc_name')
     queueCount = serializers.SerializerMethodField('get_queueCount')
     myTurn = serializers.SerializerMethodField('get_myTurn')
 
@@ -32,6 +35,24 @@ class QueueUserSerializer(serializers.ModelSerializer):
     #     storeObj = Queue.objects.get(id=getQueueFk)
     #     serializer = QueueSerializer(instance=storeObj)
     #     return serializer.data['totalPeople']
+
+    def get_adminAcc_name(self, singleObj): 
+        getadminAccFk = getattr(singleObj, 'adminAcc_fk_id')  #! _id is imp
+        adminAccObj = AdminAcc.objects.get(id=getadminAccFk)
+        serializer = AdminAccSerializer(instance=adminAccObj)
+        return serializer.data["companyName"]
+
+    def get_userAccName(self, singleObj): 
+        getUserAccFk = getattr(singleObj, 'userAcc_fk_id')  #! _id is imp
+        userAccObj = UserAcc.objects.get(id=getUserAccFk)
+        serializer = UserAccSerializer(instance=userAccObj)
+        return serializer.data["email"]
+
+    def get_queueName(self, singleObj): 
+        getQueueFk = getattr(singleObj, 'queue_fk_id')  #! _id is imp
+        queueObj = Queue.objects.get(id=getQueueFk)
+        serializer = QueueSerializer(instance=queueObj)
+        return serializer.data["name"]
 
     def get_queueCount(self, singleObj): 
         getQueueFk = getattr(singleObj, 'queue_fk_id')  #! _id is imp
@@ -50,9 +71,12 @@ class QueueUserSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = [
             'id',
-            'queue_fk','queue_name',
-            'userAcc_fk','userAcc_name',
-            'adminAcc_fk','adminAcc_name',
+            'queue_fk',
+            'queue_name',
+            'userAcc_fk',
+            'userAcc_name',
+            'adminAcc_fk',
+            'adminAcc_name',
             'joinedTime',
             'queueCount','myTurn'
         ]
