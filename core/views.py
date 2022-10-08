@@ -531,7 +531,6 @@ def updateQueueUser(request,id):
 @api_view(['DELETE' , 'GET'])
 def deleteQueueUser(request,id):
     userObj = QueueUser.objects.get(id=id)  #! make sure to chaneg id , to g_uid here
-    getEmail = userObj.userAcc_name
 
     # getQueue_fk = userObj.queue_fk_id  #! _id at end is imp 
     userObj.delete()
@@ -548,7 +547,8 @@ def deleteQueueUser(request,id):
     #     print(qSerializer.data)
     # #! end of queue DB modifictaion
 
-     
+
+    getEmail = userObj.userAcc_name  # do not move this line up
 
     #Todo : uncomment this later , when you are in production
     #? this might send email to wrong emails ( since i'm using false emails)
