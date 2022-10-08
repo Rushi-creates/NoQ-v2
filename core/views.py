@@ -551,14 +551,14 @@ def deleteQueueUser(request,id):
 
     #Todo : uncomment this later , when you are in production
     #? this might send email to wrong emails ( since i'm using false emails)
-    # email = EmailMessage(
-    #     'You are removed from queue :',                   # subject test here 
-    #     'if you think this email was sent to you by mistake, please ignore this message',        # body text here 
-    #     settings.EMAIL_HOST_USER,    # sender's email from settigs.py 
-    #     [getEmail],    # whom to send email (userAcc_name contains email)
-    #     )
-    # email.fail_silently=False  # will sent us email notifying in case of any error
-    # email.send()    
+    email = EmailMessage(
+        'You are removed from queue :',                   # subject test here 
+        'if you think this email was sent to you by mistake, please ignore this message',        # body text here 
+        settings.EMAIL_HOST_USER,    # sender's email from settigs.py 
+        [getEmail],    # whom to send email (userAcc_name contains email)
+        )
+    email.fail_silently=False  # will sent us email notifying in case of any error
+    email.send()    
 
     return Response(f"Deleted {id}")
 
