@@ -1,5 +1,4 @@
 # from appNameFolder.fileName import func/className
-from functools import partial
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -295,9 +294,7 @@ def delete_AdminAcc(request,id):
 @api_view(['POST'])
 def verify_AdminEmail_beforeRegister(request):
 
-    emailBody = 'Your OTP is : '+ str(otp) +'.\n'
-    'if you think this was sent to you by mistake , please ignore this email'
-
+  
     myemail =request.data.get('email')
     mypass = request.data.get('password')
 
@@ -309,6 +306,10 @@ def verify_AdminEmail_beforeRegister(request):
     else:
         otp=random.randint(1000,9999) 
         print (otp)
+
+        emailBody = 'Your OTP is : '+ str(otp) +'.\n'
+        'if you think this was sent to you by mistake , please ignore this email'
+
 
         #note first send this same otp to some sms paid service with twillio  or to EMAIL (twillio  OR email code here)
         email = EmailMessage(
