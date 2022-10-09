@@ -532,8 +532,8 @@ def updateQueueUser(request,id):
 def deleteQueueUser(request,id):
     userObj = QueueUser.objects.get(id=id)  #! make sure to chaneg id , to g_uid here
 
-    # getQueue_fk = userObj.queue_fk_id  #! _id at end is imp 
     userObj.delete()
+    # getQueue_fk = userObj.queue_fk_id  #! _id at end is imp 
 
     # # make sure to keep this after delete only
     # #! Start- update queue (not queueUser) DB totalPeople prop , when new queueUser added to that queue
@@ -547,7 +547,7 @@ def deleteQueueUser(request,id):
     #     print(qSerializer.data)
     # #! end of queue DB modifictaion
 
-
+    # email will not be sent, coz userAcc_name is a derieved attribute
     getEmail = userObj.userAcc_name  # do not move this line up
 
     #Todo : uncomment this later , when you are in production

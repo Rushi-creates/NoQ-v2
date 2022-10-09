@@ -160,7 +160,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rushi.creates@gmail.com'       # our sender email
-EMAIL_HOST_PASSWORD = 'ptmhuoezwxxsozlc'       # our sender email's pass
+# EMAIL_HOST_PASSWORD = 'ptmhuoezwxxsozlc'       # our sender email's pass ( old)
+EMAIL_HOST_PASSWORD = 'snafircfifmuzele'       # our sender email's pass
 
 
 
